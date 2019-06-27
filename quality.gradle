@@ -3,10 +3,10 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 
-def final String QUALITY_DIR       = "quality"
-def final String SOURCE            = "src"
-def final String INCLUDE_JAVA      = "**/*.java"
-def final String EXCLUDE_GENERATED = "**/gen/**"
+final String QUALITY_DIR       = "quality"
+final String SOURCE            = "src"
+final String INCLUDE_JAVA      = "**/*.java"
+final String EXCLUDE_GENERATED = "**/gen/**"
 
 android {
     lintOptions {
@@ -59,10 +59,10 @@ task findbugs(type: FindBugs) {
         html.enabled = true
 
         xml {
-            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+            destination new File("$project.buildDir/reports/findbugs/findbugs.xml")
         }
         html {
-            destination "$project.buildDir/reports/findbugs/findbugs.html"
+            destination new File("$project.buildDir/reports/findbugs/findbugs.html")
         }
     }
 
@@ -85,14 +85,12 @@ task pmd(type: Pmd) {
         xml.enabled = false
         html.enabled = true
         xml {
-            destination "$project.buildDir/reports/pmd/pmd.xml"
+            destination new File("$project.buildDir/reports/pmd/pmd.xml")
         }
         html {
-            destination "$project.buildDir/reports/pmd/pmd.html"
+            destination new File("$project.buildDir/reports/pmd/pmd.html")
         }
     }
 }
 
-preBuild.dependsOn('checkstyle')
-
-check.dependsOn 'findbugs', 'pmd', 'lint'
+check.dependsOn 'lint'
